@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Too Cute Overload 💘</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box }
+    body {
+      background: #ff66b3;
+      font-family: 'Comic Sans MS', cursive;
+      color: #33001a;
+      text-align: center;
+      padding: 40px 10px;
+      overflow: hidden;
+    }
+    .page { display:none; animation:fadeIn 0.5s ease }
+    .active { display:block }
+    @keyframes fadeIn { from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)} }
+    button {
+      background:#ff1a75; border:none; color:white;
+      padding:14px 28px; font-size:18px;
+      border-radius:25px; margin:12px;
+      cursor:pointer; transition:0.2s; position:relative;
+    }
+    button:hover { background:#ff3385; transform:scale(1.05) }
+    .escape { position:absolute }
+    img {
+      max-width:250px; margin:20px auto; display:block;
+    }
+    #meterContainer{width:80%;height:30px;background:#ff99cc;
+      margin:30px auto;border-radius:15px;overflow:hidden}
+    #meter{height:100%;background:#cc0066;width:0;transition:width 0.3s ease}
+    .explode { animation:explode 0.8s ease forwards }
+    @keyframes explode { to{transform:scale(5);opacity:0} }
+  </style>
+</head>
+<body>
+
+<audio autoplay loop>
+  <source src="https://dl.sndup.net/vxfg/softlove.mp3" type="audio/mpeg">
+</audio>
+
+<div class="page active" id="page0">
+  <h1>Hey gorgeous 💖</h1>
+  <p>Can I share something sweet?</p>
+  <button onclick="go('yes1')">Yes 🥺</button>
+  <button class="noBtn" onclick="noHandle()">No 😒</button>
+</div>
+
+<!-- YES pages -->
+<div class="page" id="yes1">
+  <h1>Did you know your eyes sparkle like stars?</h1>
+ <img src="cutepic1.jpg" alt="Us" style="max-width:90%;border-radius:20px;margin-top:20px;" />
+  <button onclick="go('yes2')">Yes 💕</button>
+  <button class="noBtn" onclick="noHandle()">No 😒</button>
+</div>
+
+<div class="page" id="yes2">
+  <h1>Did you know your smile melts my heart?</h1>
+  <img src="cutepic2.jpg" alt="Us" style="max-width:40%;border-radius:8px;margin-top:8px;" />
+  <button onclick="go('yes3')">Yes 💗</button>
+  <button class="noBtn" onclick="noHandle()">No 😒</button>
+</div>
+
+<div class="page" id="yes3">
+  <h1>Did you know your voice is like a lullaby?</h1>
+  <img src="cutebear1.jpeg" alt="Us" style="max-width:90%;border-radius:20px;margin-top:20px;" />
+  <button onclick="go('yes4')">Yes 💘</button>
+  <button class="noBtn" onclick="noHandle()">No 😒</button>
+</div>
+
+<div class="page" id="yes4">
+  <h1>Did you know your laugh lights up my world?</h1>
+  <img src="cutebear7.jpeg" alt="Us" style="max-width:90%;border-radius:20px;margin-top:20px;" />
+  <button onclick="go('yes5')">Yes 💞</button>
+  <button class="noBtn" onclick="noHandle()">No 😒</button>
+</div>
+
+<div class="page" id="yes5">
+  <h1>Did you know you're the kindest soul ever?</h1>
+  <img src="cutebear1.jpeg" alt="Us" style="max-width:90%;border-radius:20px;margin-top:20px;" />
+  <button onclick="go('yes6')">Yes 💝</button>
+  <button class="noBtn" onclick="noHandle()">No 😒</button>
+</div>
+
+<div class="page" id="yes6">
+  <h1>Imagining all that is total cuteness overload!</h1>
+  <div id="meterContainer"><div id="meter"></div></div>
+  <button onclick="go('yes7')">Kill me with a Kiss</button>
+  <button class="noBtn" onclick="noHandle()">No 😒</button>
+</div>
+
+<div class="page" id="yes7">
+    <h1>Did you kiss me</h1>
+  <img src="mypic.jpg" alt="Us" style="max-width:20%;border-radius:5px;margin-top:5px;" />
+     <button onclick="go('yes8')">Yes 💝</button>
+  <button class="noBtn" onclick="noHandle()">No 😒</button>
+</div>
+
+<div class="page" id="yes8">
+  <h1>My heart’s gone 💀… in the cutest way!</h1>
+  <h2>I LOVE YOU BABY </h2>
+</div>
+
+<!-- NO path pages -->
+<div class="page" id="no1">
+  <h1>😠 Really? Did I hurt you?</h1>
+  <button onclick="go('page0')">Try Again</button>
+</div>
+<div class="page" id="no2">
+  <h1>😡 Okay, tough crowd.</h1>
+  <button onclick="go('page0')">One more try</button>
+</div>
+<div class="page" id="no3">
+  <h1>😤 That's it, the No button is escaping now!</h1>
+  <button onclick="activateEscape()">Got it 😈</button>
+</div>
+
+<script>
+  let noCount = 0;
+
+  function go(id){
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+
+    // Reset escape logic
+    document.querySelectorAll('.noBtn').forEach(btn => {
+      btn.classList.remove('escape');
+      btn.style.left = '';
+      btn.style.top = '';
+      btn.onmouseover = null;
+    });
+
+    // Apply escape if threshold crossed
+    if(noCount >= 3){
+      document.querySelectorAll('.noBtn').forEach(btn => {
+        btn.classList.add('escape');
+        btn.onmouseover = () => {
+          btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+          btn.style.top = Math.random() * (window.innerHeight - 80) + 'px';
+        };
+      });
+    }
+
+    if(id === 'yes6') startMeter();
+  }
+
+  function noHandle(){
+    noCount++;
+    if(noCount <= 3){
+      go('no' + noCount);
+    } else {
+      activateEscape();
+    }
+  }
+
+  function activateEscape(){
+    document.querySelectorAll('.noBtn').forEach(btn => {
+      btn.classList.add('escape');
+      btn.onmouseover = () => {
+        btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+        btn.style.top = Math.random() * (window.innerHeight - 80) + 'px';
+      };
+    });
+  }
+
+  function startMeter(){
+    const meter = document.getElementById('meter');
+    let pct = 0;
+    const t = setInterval(() => {
+      meter.style.width = (pct += 20) + '%';
+      if (pct >= 100) clearInterval(t);
+    }, 300);
+  }
+
+  function explode(){
+    document.getElementById('boom').style.display = 'block';
+    go('yes7');
+  }
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
