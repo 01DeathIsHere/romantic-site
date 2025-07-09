@@ -12,6 +12,7 @@
       text-align: center;
       padding: 40px 10px;
       overflow: hidden;
+      position: relative;
     }
     .page { display:none; animation:fadeIn 0.5s ease }
     .active { display:block }
@@ -23,15 +24,11 @@
       cursor:pointer; transition:0.2s; position:relative;
     }
     button:hover { background:#ff3385; transform:scale(1.05) }
-    body {
-  background: #ff66b3;
-  font-family: 'Comic Sans MS', cursive;
-  color: #33001a;
-  text-align: center;
-  padding: 40px 10px;
-  overflow: hidden;
-  position: relative; /* ✅ Add this line */
+    .noBtn.escape {
+  position: absolute !important;
+  transition: top 0.3s ease, left 0.3s ease;
 }
+
 ...
 .noBtn.escape {
   position: absolute !important;
@@ -146,7 +143,9 @@
     });
 
     // Apply escape if threshold crossed
-    if(noCount >= 3){
+    if(noCount >= 3 && id === 'page0'){
+  activateEscape();
+}
       document.querySelectorAll('.noBtn').forEach(btn => {
         btn.classList.add('escape');
         btn.onmouseover = () => {
@@ -164,10 +163,11 @@
   if(noCount <= 3){
     go('no' + noCount);
   } else {
-    go('page0'); // Go back to main page to show floating No
-    activateEscape(); // Activate float behavior
+    go('page0');
+    setTimeout(activateEscape, 200); // ensure escape loads after transition
   }
 }
+
 
 
   function activateEscape(){
