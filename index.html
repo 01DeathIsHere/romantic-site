@@ -23,7 +23,21 @@
       cursor:pointer; transition:0.2s; position:relative;
     }
     button:hover { background:#ff3385; transform:scale(1.05) }
-    .escape { position:absolute }
+    body {
+  background: #ff66b3;
+  font-family: 'Comic Sans MS', cursive;
+  color: #33001a;
+  text-align: center;
+  padding: 40px 10px;
+  overflow: hidden;
+  position: relative; /* ✅ Add this line */
+}
+...
+.noBtn.escape {
+  position: absolute !important;
+  transition: top 0.3s ease, left 0.3s ease;
+}
+
     img {
       max-width:250px; margin:20px auto; display:block;
     }
@@ -146,13 +160,15 @@
   }
 
   function noHandle(){
-    noCount++;
-    if(noCount <= 3){
-      go('no' + noCount);
-    } else {
-      activateEscape();
-    }
+  noCount++;
+  if(noCount <= 3){
+    go('no' + noCount);
+  } else {
+    go('page0'); // Go back to main page to show floating No
+    activateEscape(); // Activate float behavior
   }
+}
+
 
   function activateEscape(){
     document.querySelectorAll('.noBtn').forEach(btn => {
